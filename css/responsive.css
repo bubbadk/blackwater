@@ -1,0 +1,129 @@
+/* ============================================================================
+   THE BLACK RELIQUARY - RESPONSIVE
+   Desktop-first, with tablet and phone adaptations.
+   ============================================================================ */
+
+/* ---- Tablet ------------------------------------------------------------ */
+@media (max-width: 900px) {
+  .menu {
+    min-width: min(22rem, 84vw);
+  }
+
+  .title-eyebrow {
+    margin-bottom: var(--space-4);
+  }
+
+  .hud {
+    padding: 0 var(--space-4);
+  }
+
+  .setting-row input[type="range"] {
+    max-width: 12rem;
+  }
+}
+
+/* ---- Phone ------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .title-content {
+    padding: var(--space-4);
+  }
+
+  .title-eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+  }
+
+  .title-sub {
+    font-size: 0.82rem;
+  }
+
+  .menu {
+    margin-top: var(--space-6);
+    min-width: 88vw;
+  }
+
+  .menu-item {
+    padding: var(--space-3);
+    font-size: 0.92rem;
+    letter-spacing: 0.14em;
+  }
+
+  .title-hint {
+    margin-top: var(--space-6);
+    font-size: 0.6rem;
+  }
+
+  .hud,
+  .hud-location {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+  }
+
+  .hud-menu {
+    top: var(--space-2);
+    right: var(--space-3);
+    font-size: 0.66rem;
+  }
+
+  .subtitle-bar {
+    bottom: var(--space-4);
+    width: calc(100vw - 2rem);
+    font-size: 0.95rem;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .modal {
+    width: calc(100vw - 1rem);
+  }
+
+  .modal-card {
+    padding: var(--space-4);
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .setting-row input[type="range"] {
+    max-width: 9rem;
+  }
+
+  .loading-card {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .night-moon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .archive-entry {
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .archive-name {
+    flex-basis: 100%;
+    order: 3;
+  }
+}
+
+/* ---- Touch devices: keep hotspots and inventory discoverable ---------- */
+@media (hover: none) {
+  .game-hotspot {
+    border-color: rgba(201, 162, 75, 0.3);
+    background: rgba(201, 162, 75, 0.05);
+  }
+  .inv-item {
+    border-color: rgba(201, 162, 75, 0.28);
+  }
+}
+
+/* ---- Very short viewports (landscape phones) -------------------------- */
+@media (max-height: 480px) {
+  .title-eyebrow { margin-bottom: var(--space-2); }
+  .menu { margin-top: var(--space-4); gap: 0; }
+  .menu-item { padding: var(--space-2) var(--space-3); }
+  .title-hint { margin-top: var(--space-4); }
+  .title-game { font-size: 2rem; }
+}

@@ -1,5 +1,19 @@
 {
   "version": 1,
   "name": "blackwater",
-  "services": []
+  "services": [
+    {
+      "id": "blackwater-web",
+      "name": "The Black Reliquary",
+      "managed": true,
+      "command": ["python3", "start-managed.py"],
+      "cwd": ".",
+      "url": "https://blackwater.dybbol.com/",
+      "health_url": "http://127.0.0.1:8751/",
+      "env": {
+        "PORT": "8751",
+        "HOST": "0.0.0.0"
+      }
+    }
+  ]
 }

@@ -1,0 +1,29 @@
+/* ============================================================================
+   THE BLACK RELIQUARY - TRANSITIONS
+   The transition overlay is driven by transitions.js (fade / dissolve /
+   flicker). This stylesheet holds the base state and helper classes.
+   ============================================================================ */
+
+.transition-overlay {
+  will-change: opacity;
+  transition: opacity var(--t-mid) var(--ease-io);
+}
+
+/* Kill the transition while the overlay is being positioned/reset. */
+.transition-overlay.no-anim {
+  transition: none !important;
+}
+
+/* Letterbox is used during cutscene-style transitions. */
+.letterbox { will-change: opacity; }
+
+/* CSS fallback flicker (transitions.js does the real thing via rAF). */
+@keyframes overlay-flicker {
+  0%, 100% { opacity: 1; }
+  18%      { opacity: 0.15; }
+  22%      { opacity: 0.9; }
+  34%      { opacity: 0.25; }
+  38%      { opacity: 1; }
+  57%      { opacity: 0.5; }
+  61%      { opacity: 1; }
+}

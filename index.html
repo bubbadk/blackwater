@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0b0d" />
+  <title>THE BLACK RELIQUARY</title>
+  <script defer>fetch('https://stats.dybbol.com/track?page='+encodeURIComponent(location.pathname)+'&site='+encodeURIComponent(location.hostname))</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/shell.css" />
+  <link rel="stylesheet" href="css/screens.css" />
+  <link rel="stylesheet" href="css/transitions.css" />
+  <link rel="stylesheet" href="css/game.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <!-- ══════════════════════════ TITLE SCREEN ══════════════════════════ -->
+  <section class="screen screen--title is-active" data-screen="title" aria-label="Main menu">
+    <div class="title-scene" aria-hidden="true">
+      <div class="night-sky"></div>
+      <div class="night-moon"></div>
+      <svg class="night-skyline" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs><linearGradient id="skylineFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#04060b"/><stop offset="1" stop-color="#0b0e15"/></linearGradient></defs>
+        <g fill="url(#skylineFill)">
+          <rect x="0" y="200" width="150" height="120"/><rect x="120" y="172" width="96" height="148"/><polygon points="120,172 168,132 216,172"/>
+          <rect x="300" y="210" width="120" height="110"/><rect x="396" y="188" width="70" height="132"/><rect x="500" y="150" width="120" height="170"/><polygon points="500,150 560,96 620,150"/><rect x="548" y="60" width="24" height="40"/><polygon points="548,60 560,34 572,60"/><rect x="556" y="28" width="8" height="10"/>
+          <rect x="660" y="120" width="28" height="200"/><rect x="700" y="96" width="22" height="224"/><rect x="734" y="140" width="26" height="180"/><rect x="800" y="196" width="130" height="124"/><rect x="900" y="172" width="90" height="148"/><polygon points="900,172 945,136 990,172"/>
+          <rect x="1020" y="206" width="110" height="114"/><rect x="1160" y="120" width="44" height="200"/><polygon points="1160,120 1182,92 1204,120"/><rect x="1176" y="84" width="12" height="12"/><rect x="1260" y="216" width="8" height="104"/><rect x="1246" y="150" width="6" height="66"/><polygon points="1249,150 1258,128 1267,150"/>
+        </g>
+      </svg>
+      <div class="night-sea"></div>
+      <div class="harbour-lights" aria-hidden="true">
+        <span class="light" style="left:12%;top:72%"></span><span class="light" style="left:24%;top:76%"></span><span class="light" style="left:38%;top:70%"></span><span class="light" style="left:55%;top:74%"></span><span class="light" style="left:70%;top:71%"></span><span class="light" style="left:84%;top:75%"></span>
+      </div>
+      <canvas class="rain-layer" aria-hidden="true"></canvas>
+      <div class="fog-layer fog-layer--1"></div>
+      <div class="fog-layer fog-layer--2"></div>
+    </div>
+
+    <div class="title-content">
+      <p class="title-eyebrow">Ward Investigations · Private Inquiries</p>
+      <h1 class="title-game">THE BLACK<br/>RELIQUARY</h1>
+      <p class="title-sub">A Detective Story of Things That Should Have Remained Buried</p>
+      <nav class="menu" aria-label="Main menu">
+        <button class="menu-item" data-action="continue" type="button">
+          <span class="menu-label">Continue</span>
+          <span class="menu-state" data-state="continue"></span>
+        </button>
+        <button class="menu-item menu-item--primary" data-action="new" type="button">
+          <span class="menu-label">New Investigation</span>
+        </button>
+        <button class="menu-item" data-action="load" type="button">
+          <span class="menu-label">Load Case</span>
+        </button>
+        <button class="menu-item" data-action="settings" type="button">
+          <span class="menu-label">Settings</span>
+        </button>
+        <button class="menu-item" data-action="archive" type="button">
+          <span class="menu-label">Case Archive</span>
+        </button>
+        <button class="menu-item" data-action="credits" type="button">
+          <span class="menu-label">Credits</span>
+        </button>
+      </nav>
+      <p class="title-hint">Click to begin · Sound recommended</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ LOADING SCREEN ══════════════════════════ -->
+  <section class="screen screen--loading" data-screen="loading" aria-label="Loading">
+    <div class="loading-card">
+      <p class="loading-eyebrow">Ward Investigations — Private Inquiries</p>
+      <h2 class="loading-location" id="loading-location">Blackwater Bay</h2>
+      <p class="loading-time" id="loading-time">11:47 PM · October 17, 1936</p>
+      <div class="loading-rule"></div>
+      <p class="loading-note" id="loading-note"></p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ GAME SCREEN ══════════════════════════ -->
+  <section class="screen screen--game" data-screen="game" aria-label="Investigation">
+    <div class="scene-root" id="game-bg" aria-hidden="true"></div>
+    <div class="scene-vignette" aria-hidden="true"></div>
+
+    <div class="game-ui">
+      <div class="game-scene-text">
+        <h2 class="game-title" id="game-title">—</h2>
+        <p class="game-desc" id="game-desc"></p>
+      </div>
+      <div class="game-hotspots" id="game-hotspots"></div>
+      <div class="game-actions" id="game-actions"></div>
+    </div>
+
+    <div class="hud" aria-hidden="true">
+      <span class="hud-location" id="hud-location">—</span>
+      <span class="hud-time" id="hud-act">—</span>
+    </div>
+    <button class="hud-menu hud-menu--night" id="btn-night" type="button" aria-label="Toggle day/night">DAY</button>
+    <button class="hud-menu" id="btn-menu" type="button" aria-label="Return to menu">Menu</button>
+
+    <div class="game-bar">
+      <div class="game-inventory" id="game-inventory"></div>
+      <div class="game-bar-buttons">
+        <button class="gbtn" id="btn-notebook" type="button">Notebook <kbd>N</kbd></button>
+        <button class="gbtn" id="btn-board" type="button">Board <kbd>B</kbd></button>
+        <button class="gbtn" id="btn-map" type="button">Map <kbd>M</kbd></button>
+      </div>
+    </div>
+
+    <div class="game-story" id="game-story" hidden>
+      <p class="story-speaker" id="story-speaker"></p>
+      <p class="story-text" id="story-text"></p>
+      <button class="story-action" id="story-action" type="button">Continue</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ ENDING SCREEN ══════════════════════════ -->
+  <section class="screen screen--ending" data-screen="ending" aria-label="Ending">
+    <div class="ending-card">
+      <p class="ending-eyebrow">The Case File — Closed</p>
+      <h2 class="end-title" id="end-title">—</h2>
+      <p class="end-unlock" id="end-unlock"></p>
+      <div class="end-body" id="end-body"></div>
+      <button class="btn" id="end-menu" type="button">Return to the office</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ GLOBAL OVERLAYS ══════════════════════════ -->
+  <div class="vignette" id="vignette" aria-hidden="true"></div>
+  <canvas class="grain" id="grain" aria-hidden="true"></canvas>
+  <div class="letterbox" id="letterbox" aria-hidden="true"></div>
+  <div class="transition-overlay" id="transition-overlay" aria-hidden="true">
+    <canvas class="dissolve-canvas" id="dissolve-canvas"></canvas>
+  </div>
+  <div class="subtitle-bar" id="subtitle-bar" role="status" aria-live="polite"></div>
+
+  <div class="deduction-banner" id="deduction-banner" aria-live="polite">
+    <p class="ded-eyebrow">Deduction</p>
+    <p class="ded-title" id="ded-title"></p>
+    <p class="ded-line" id="ded-line"></p>
+  </div>
+
+  <!-- ══════════════════════════ MODALS ══════════════════════════ -->
+  <div class="modal-layer" id="modal-layer" aria-hidden="true"></div>
+
+  <div class="modal" data-modal="settings" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden>
+    <div class="modal-card">
+      <h3 class="modal-title" id="settings-title">Settings</h3>
+      <div class="modal-body">
+        <div class="setting-group"><h4 class="setting-heading">Volume</h4>
+          <label class="setting-row"><span class="setting-label">Master</span><input type="range" id="vol-master" min="0" max="100" value="100" /></label>
+          <label class="setting-row"><span class="setting-label">Ambience</span><input type="range" id="vol-ambience" min="0" max="100" value="70" /></label>
+          <label class="setting-row"><span class="setting-label">Music</span><input type="range" id="vol-music" min="0" max="100" value="55" /></label>
+          <label class="setting-row"><span class="setting-label">Dialogue / Effects</span><input type="range" id="vol-sfx" min="0" max="100" value="85" /></label>
+        </div>
+        <div class="setting-group"><h4 class="setting-heading">Accessibility</h4>
+          <label class="setting-row setting-row--toggle"><span class="setting-label">Reduced motion</span><input type="checkbox" id="opt-reduced-motion" /></label>
+          <label class="setting-row setting-row--toggle"><span class="setting-label">Readable font</span><input type="checkbox" id="opt-readable-font" /></label>
+        </div>
+      </div>
+      <div class="modal-actions"><button class="btn" type="button" data-close>Back</button></div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="load" role="dialog" aria-modal="true" aria-labelledby="load-title" hidden>
+    <div class="modal-card">
+      <h3 class="modal-title" id="load-title">Load Case</h3>
+      <div class="modal-body"><p class="modal-empty">One case file on record.</p><p class="modal-sub">Continue from where the last investigation left off.</p></div>
+      <div class="modal-actions"><button class="btn" type="button" id="btn-load-now">Load</button><button class="btn" type="button" data-close>Back</button></div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="archive" role="dialog" aria-modal="true" aria-labelledby="archive-title" hidden>
+    <div class="modal-card">
+      <h3 class="modal-title" id="archive-title">Case Archive — Closed Files</h3>
+      <div class="modal-body"><ul class="archive-list" id="archive-list"></ul></div>
+      <div class="modal-actions"><button class="btn" type="button" data-close>Back</button></div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="credits" role="dialog" aria-modal="true" aria-labelledby="credits-title" hidden>
+    <div class="modal-card">
+      <h3 class="modal-title" id="credits-title">Credits</h3>
+      <div class="modal-body modal-body--credits">
+        <p class="credits-line">THE BLACK RELIQUARY</p>
+        <p class="credits-line credits-line--sub">A Detective Story of Things That Should Have Remained Buried</p>
+        <div class="loading-rule"></div>
+        <p class="credits-line">Written, designed &amp; developed for the web</p>
+        <p class="credits-line">Blackwater Bay, Massachusetts · 1936</p>
+        <p class="credits-line credits-line--dim">Headphones recommended · Built with gratitude for the rain</p>
+      </div>
+      <div class="modal-actions"><button class="btn" type="button" data-close>Back</button></div>
+    </div>
+  </div>
+
+  <!-- ---- game modals ---- -->
+  <div class="modal" data-modal="dialogue" role="dialog" aria-modal="true" aria-labelledby="dlg-speaker" hidden>
+    <div class="modal-card modal-card--dialogue">
+      <div class="dlg-speaker" id="dlg-speaker"></div>
+      <p class="dlg-text" id="dlg-text"></p>
+      <div class="dlg-choices" id="dlg-choices"></div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="clue" role="dialog" aria-modal="true" aria-labelledby="clue-title" hidden>
+    <div class="modal-card modal-card--clue">
+      <p class="clue-category" id="clue-category"></p>
+      <h3 class="modal-title" id="clue-title"></h3>
+      <p class="clue-text" id="clue-text"></p>
+      <p class="clue-notebook" id="clue-notebook"></p>
+      <div class="modal-actions">
+        <button class="btn" type="button" id="clue-doc">View document</button>
+        <button class="btn" type="button" data-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="item" role="dialog" aria-modal="true" aria-labelledby="item-title" hidden>
+    <div class="modal-card modal-card--clue">
+      <p class="clue-category" id="item-category"></p>
+      <h3 class="modal-title" id="item-title"></h3>
+      <p class="clue-text" id="item-text"></p>
+      <div class="modal-actions"><button class="btn" type="button" data-close>Close</button></div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="document" role="dialog" aria-modal="true" aria-labelledby="doc-title" hidden>
+    <div class="modal-card modal-card--document">
+      <h3 class="modal-title" id="doc-title"></h3>
+      <pre class="doc-text" id="doc-text"></pre>
+      <div class="modal-actions"><button class="btn" type="button" data-close>Close</button></div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="notebook" role="dialog" aria-modal="true" aria-labelledby="nb-title" hidden>
+    <div class="modal-card modal-card--wide">
+      <h3 class="modal-title" id="nb-title">Ward's Notebook</h3>
+      <div class="modal-body nb-body">
+        <div class="nb-col"><h4 class="setting-heading">Deductions</h4><div id="nb-deductions"></div></div>
+        <div class="nb-col"><h4 class="setting-heading">Evidence</h4><div id="nb-clues"></div></div>
+        <div class="nb-col"><h4 class="setting-heading">Documents</h4><div id="nb-docs"></div></div>
+        <div class="nb-col"><h4 class="setting-heading">Unanswered Questions</h4><div id="nb-questions"></div></div>
+      </div>
+      <div class="modal-actions"><button class="btn" type="button" data-close>Close</button></div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="board" role="dialog" aria-modal="true" aria-labelledby="board-title" hidden>
+    <div class="modal-card modal-card--wide">
+      <h3 class="modal-title" id="board-title">Evidence Board</h3>
+      <div class="modal-body">
+        <h4 class="setting-heading">Pinned evidence</h4>
+        <div class="board-pins" id="board-pins"></div>
+        <h4 class="setting-heading">Deductions</h4>
+        <div class="board-deductions" id="board-deductions"></div>
+      </div>
+      <div class="modal-actions"><button class="btn" type="button" data-close>Close</button></div>
+    </div>
+  </div>
+
+  <div class="modal" data-modal="map" role="dialog" aria-modal="true" aria-labelledby="map-title" hidden>
+    <div class="modal-card modal-card--wide">
+      <h3 class="modal-title" id="map-title">Blackwater Bay — Ward's Map</h3>
+      <div class="modal-body"><div class="map-locations" id="map-locations"></div></div>
+      <div class="modal-actions"><button class="btn" type="button" data-close>Close</button></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ SCRIPTS ══════════════════════════ -->
+  <script src="js/core/events.js"></script>
+  <script src="js/core/fx.js"></script>
+  <script src="js/core/audio.js"></script>
+  <script src="js/core/transitions.js"></script>
+  <script src="js/core/cursor.js"></script>
+  <script src="js/core/scenes.js"></script>
+  <script src="js/core/shell.js"></script>
+  <script src="js/engine/engine.js"></script>
+  <script src="js/game/clues.js"></script>
+  <script src="js/game/items.js"></script>
+  <script src="js/game/dialogues.js"></script>
+  <script src="js/game/scenes.js"></script>
+  <script src="js/game/story.js"></script>
+  <script src="js/game/content.js"></script>
+  <script src="js/ui/title.js"></script>
+  <script src="js/ui/loading.js"></script>
+  <script src="js/game/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

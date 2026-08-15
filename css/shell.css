@@ -1,0 +1,86 @@
+/* ============================================================================
+   THE BLACK RELIQUARY - SHELL
+   Global overlay layers (vignette, grain, letterbox, transition) and
+   hotspot cursor states.
+   ============================================================================ */
+
+/* ---- Vignette ---------------------------------------------------------- */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-vignette);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent var(--vignette-spread),
+    rgba(0, 0, 0, var(--vignette-opacity)) 100%
+  );
+}
+
+/* ---- Film grain (canvas painted by fx.js) ------------------------------ */
+.grain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+}
+
+/* ---- Letterbox (cinematic bars, toggled via .is-on) -------------------- */
+.letterbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-letterbox);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease-io);
+}
+
+.letterbox.is-on { opacity: 1; }
+
+.letterbox::before,
+.letterbox::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--letterbox-h);
+  background: #000;
+}
+
+.letterbox::before { top: 0; }
+.letterbox::after  { bottom: 0; }
+
+/* ---- Transition overlay (driven by transitions.js) --------------------- */
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-transition);
+  pointer-events: none;
+  background: #000;
+  opacity: 0;
+}
+
+.dissolve-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- Hotspot cursor states ----------------------------------------------
+   The Cursor manager sets body[data-cursor-mode="..."]. Cursor is an
+   inherited property, so the mode cascades to the hotspot under the pointer.
+   The magnifier is an inline SVG cursor; the native zoom-in is the fallback
+   if a browser rejects the data URI. */
+body[data-cursor-mode="examine"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Ccircle cx='10' cy='10' r='6.5' fill='none' stroke='white' stroke-width='2'/%3E%3Cline x1='15' y1='15' x2='23' y2='23' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") 5 5, zoom-in;
+}
+
+body[data-cursor-mode="look"]     { cursor: zoom-in; }
+body[data-cursor-mode="go"]       { cursor: pointer; }
+body[data-cursor-mode="grab"]     { cursor: grab; }
+body[data-cursor-mode="grabbing"] { cursor: grabbing; }
